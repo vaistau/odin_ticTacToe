@@ -18,3 +18,17 @@
   input[type="search"]::-webkit-search-cancel-button {
     -webkit-appearance: none;
   }
+  
+.squares {
+  display: flex;
+  width: 600px;
+  flex-wrap: wrap;
+}
+
+.square {
+  display: flex;
+  width: 200px;
+  height: 200px;
+  justify-content: center;
+  align-items: center;
+}

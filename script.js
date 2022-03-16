@@ -19,7 +19,7 @@ const gameboard = (() => {
 
     //add event listeners for each square
 
-})()
+})();
 
 //game object
 const game = (() => {
@@ -32,4 +32,4 @@ const game = (() => {
     //generate players
     const playerOne = createPlayer('Player 1');
     const playerTwo = createPlayer('Player 2');
-})
+})();
