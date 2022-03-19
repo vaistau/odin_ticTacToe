@@ -11,15 +11,18 @@ const gameboard = (() => {
         //generate board display
         let square = document.createElement('div');
         square.className = 'square';
-        square.innerHTML = 'X or O';
+        square.innerHTML = '?';
 
         //add event listeners to each square
         square.addEventListener('click', () => {
-            let player = game.getActivePlayer();
-            //add symbol to board
-            square.innerHTML = player.symbol;
-            //add symbol to array
-            board.splice(i, 1, player.symbol);
+            if (square.innerHTML === '?') {
+                //switch players
+                let player = game.getActivePlayer();
+                //add symbol to board
+                square.innerHTML = player.symbol;
+                //add symbol to array
+                board.splice(i, 1, player.symbol);
+            }
         })
 
         squares.appendChild(square);
@@ -44,16 +47,14 @@ const game = (() => {
 
     //function to change active player
     const getActivePlayer = () => {
-        if (activePlayer == playerOne) {
+        if (activePlayer === playerOne) {
             activePlayer = playerTwo;
         } else {
             activePlayer = playerOne;
         }
-
         return activePlayer;
     }
 
-    //returns
     return {
         activePlayer,
         getActivePlayer
