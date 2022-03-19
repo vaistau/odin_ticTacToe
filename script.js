@@ -2,40 +2,60 @@
 const gameboard = (() => {
     let board = [];
 
-    //generate board array
-    for (let i = 0; i < 9; i++) {
-        board.push('');
-    }
-
-    //generate board display
     let squares = document.querySelector('.squares');
 
-    board.forEach(e => {
+    for (let i = 0; i < 9; i++) {
+        //generate board array
+        board.push('');
+
+        //generate board display
         let square = document.createElement('div');
         square.className = 'square';
-        square.innerHTML = 'x';
-        squares.appendChild(square);
-    })
+        square.innerHTML = 'X or O';
 
-    //add event listeners for each square
-    squares.forEach(e => {
-        e.addEventListener('click', () => {
-            //have to figure out how to switch between players and the appropriate symbol according to which player is active
-            //square.innerHTML should be the array object of that specific index vs just editing the text alone and leaving the array empty
+        //add event listeners to each square
+        square.addEventListener('click', () => {
+            let player = game.getActivePlayer();
+            //add symbol to board
+            square.innerHTML = player.symbol;
+            //add symbol to array
+            board.splice(i, 1, player.symbol);
         })
-    })
+
+        squares.appendChild(square);
+    }
 
 })();
+
+//player factory function
+const createPlayer = (name, symbol) => {
+    return {name, symbol};
+    }
 
 //game object
 const game = (() => {
 
-    //player factory function
-    const createPlayer = (name) => {
-    return {name};
+    //generate players
+    const playerOne = createPlayer('Player 1', 'X');
+    const playerTwo = createPlayer('Player 2', 'O');
+
+    //start of game
+    let activePlayer = playerTwo;
+
+    //function to change active player
+    const getActivePlayer = () => {
+        if (activePlayer == playerOne) {
+            activePlayer = playerTwo;
+        } else {
+            activePlayer = playerOne;
+        }
+
+        return activePlayer;
     }
 
-    //generate players
-    const playerOne = createPlayer('Player 1');
-    const playerTwo = createPlayer('Player 2');
+    //returns
+    return {
+        activePlayer,
+        getActivePlayer
+    }
 })();
