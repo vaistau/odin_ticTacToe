@@ -24,7 +24,6 @@ const gameboard = (() => {
                 board.splice(i, 1, player.symbol);
             }
         })
-
         squares.appendChild(square);
     }
 
