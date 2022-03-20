@@ -26,7 +26,6 @@ const gameboard = (() => {
         })
         squares.appendChild(square);
     }
-
 })();
 
 //player factory function
@@ -53,7 +52,7 @@ const game = (() => {
         }
         return activePlayer;
     }
-
+    //returns
     return {
         activePlayer,
         getActivePlayer
