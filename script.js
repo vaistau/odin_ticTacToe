@@ -15,7 +15,7 @@ const gameboard = (() => {
 
         //add event listeners to each square
         square.addEventListener('click', () => {
-            if (square.innerHTML === '') {
+            if (square.innerHTML === '' && game.getWinState() === false) {
                 //switch player
                 let player = game.getActivePlayer();
                 //add symbol to board
@@ -49,6 +49,7 @@ const game = (() => {
 
     //start of game
     let activePlayer = playerTwo;
+    let winState = false;
 
     //change active player
     const getActivePlayer = () => {
@@ -72,11 +73,17 @@ const game = (() => {
         [2, 4, 6]
     ];
 
+    //check win state
+    const getWinState = () => {
+        return winState;
+    }
+
     //check for winner
     const checkWinner = () => {
         winConditions.forEach((element) => {
             if (gameboard.board[element[0]] === activePlayer.symbol && gameboard.board[element[1]] === activePlayer.symbol && gameboard.board[element[2]] === activePlayer.symbol) {
                 console.log('Winner is ' + activePlayer.name + '!');
+                winState = true;
             }
         })
 
@@ -90,14 +97,16 @@ const game = (() => {
                 return;
             }
         }
-        
-        console.log('It\'s a tie!');
-        
+
+        if (winState() === false) {
+            console.log('It\'s a tie!');
+        }
     }
 
     //returns
     return {
         getActivePlayer,
-        checkWinner
+        checkWinner,
+        getWinState
     }
 })();
