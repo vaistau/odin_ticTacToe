@@ -11,20 +11,27 @@ const gameboard = (() => {
         //generate board display
         let square = document.createElement('div');
         square.className = 'square';
-        square.innerHTML = '?';
+        square.innerHTML = '';
 
         //add event listeners to each square
         square.addEventListener('click', () => {
-            if (square.innerHTML === '?') {
-                //switch players
+            if (square.innerHTML === '') {
+                //switch player
                 let player = game.getActivePlayer();
                 //add symbol to board
                 square.innerHTML = player.symbol;
                 //add symbol to array
                 board.splice(i, 1, player.symbol);
+                //check for winner
+                game.checkWinner();
             }
         })
         squares.appendChild(square);
+    }
+
+    //returns
+    return {
+        board
     }
 })();
 
@@ -43,7 +50,7 @@ const game = (() => {
     //start of game
     let activePlayer = playerTwo;
 
-    //function to change active player
+    //change active player
     const getActivePlayer = () => {
         if (activePlayer === playerOne) {
             activePlayer = playerTwo;
@@ -52,9 +59,45 @@ const game = (() => {
         }
         return activePlayer;
     }
+
+    //win conditions
+    const winConditions = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+
+    //check for winner
+    const checkWinner = () => {
+        winConditions.forEach((element) => {
+            if (gameboard.board[element[0]] === activePlayer.symbol && gameboard.board[element[1]] === activePlayer.symbol && gameboard.board[element[2]] === activePlayer.symbol) {
+                console.log('Winner is ' + activePlayer.name + '!');
+            }
+        })
+
+        checkTie();
+    }
+
+    //check for tie
+    const checkTie = () => {
+        for (let i = 0; i < 9; i++) {
+            if (gameboard.board[i] !== playerOne.symbol && gameboard.board[i] !== playerTwo.symbol) {
+                return;
+            }
+        }
+        
+        console.log('It\'s a tie!');
+        
+    }
+
     //returns
     return {
-        activePlayer,
-        getActivePlayer
+        getActivePlayer,
+        checkWinner
     }
 })();
