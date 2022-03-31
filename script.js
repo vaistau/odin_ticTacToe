@@ -97,7 +97,6 @@ const game = (() => {
                 return;
             }
         }
-
         if (winState() === false) {
             console.log('It\'s a tie!');
         }
